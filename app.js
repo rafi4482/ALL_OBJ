@@ -27,17 +27,17 @@ function addItem(event) {
     const quantity = parseInt(document.getElementById('item-quantity').value, 10);
 
     if (!Object.isExtensible(inventory)) {
-        alert('Inventory is not extensible. Cannot add new items.');
+        Swal.fire('Error', 'Inventory is not extensible. Cannot add new items.', 'error');
         return;
     }
 
     if (Object.hasOwn(inventory, name)) {
         if (Object.isFrozen(inventory[name])) {
-            alert('Item is frozen. Cannot modify.');
+            Swal.fire('Error', 'Item is frozen. Cannot modify.', 'error');
             return;
         }
         inventory[name].quantity += quantity;
-        alert(`Updated ${name}'s quantity to ${inventory[name].quantity}.`);
+        Swal.fire('Success', `Updated ${name}'s quantity to ${inventory[name].quantity}.`, 'success');
     } else {
         Object.defineProperties(inventory, {
             [name]: {
@@ -47,7 +47,7 @@ function addItem(event) {
                 configurable: true
             }
         });
-        alert(`Added new item: ${name} with quantity ${quantity}.`);
+        Swal.fire('Success', `Added new item: ${name} with quantity ${quantity}.`, 'success');
     }
     updateInventoryDisplay();
 }
@@ -74,43 +74,51 @@ function deepFreezeIterative(object) {
 
 function freezeInventory() {
     deepFreezeIterative(inventory);
-    alert('Inventory has been frozen. No further modifications allowed.');
+    Swal.fire('Success', 'Inventory has been frozen. No further modifications allowed.', 'success');
     updateInventoryDisplay();
 }
 
 function sealInventory() {
     Object.seal(inventory);
-    alert('Inventory has been sealed. No further additions or deletions allowed, but modifications are still possible.');
+    Swal.fire('Success', 'Inventory has been sealed. No further additions or deletions allowed, but modifications are still possible.', 'success');
     updateInventoryDisplay();
 }
 
 function preventExtensions() {
     Object.preventExtensions(inventory);
-    alert('Inventory is now non-extensible. No new items can be added.');
+    Swal.fire('Success', 'Inventory is now non-extensible. No new items can be added.', 'success');
     updateInventoryDisplay();
 }
 
 function editItem(name) {
-    const newQuantity = prompt(`Enter new quantity for ${name}:`, inventory[name].quantity);
-    if (newQuantity !== null) {
-        if (Object.isFrozen(inventory[name])) {
-            alert('Item is frozen. Cannot modify.');
-            return;
+    Swal.fire({
+        title: `Enter new quantity for ${name}:`,
+        input: 'number',
+        inputValue: inventory[name].quantity,
+        showCancelButton: true,
+        confirmButtonText: 'Update',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (Object.isFrozen(inventory[name])) {
+                Swal.fire('Error', 'Item is frozen. Cannot modify.', 'error');
+                return;
+            }
+            inventory[name].quantity = parseInt(result.value, 10);
+            Swal.fire('Success', `Updated ${name}'s quantity to ${inventory[name].quantity}.`, 'success');
+            updateInventoryDisplay();
         }
-        inventory[name].quantity = parseInt(newQuantity, 10);
-        alert(`Updated ${name}'s quantity to ${inventory[name].quantity}.`);
-        updateInventoryDisplay();
-    }
+    });
 }
 
 function deleteItem(name) {
     if (Object.isSealed(inventory)) {
-        alert('Inventory is sealed. Cannot delete items.');
+        Swal.fire('Error', 'Inventory is sealed. Cannot delete items.', 'error');
         return;
     }
     if (Object.hasOwn(inventory, name)) {
         delete inventory[name];
-        alert(`Deleted item: ${name}.`);
+        Swal.fire('Success', `Deleted item: ${name}.`, 'success');
         updateInventoryDisplay();
     }
 }

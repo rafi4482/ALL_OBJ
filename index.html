@@ -24,8 +24,19 @@
             <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">Add Item</button>
         </form>
         <h1 class="text-3xl font-bold text-center mb-6">Items</h1>
-
         <div id="inventory-list" class="bg-white p-4 rounded-md shadow-md mb-6">
+            <table class="w-full text-left table-auto">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">Item Name</th>
+                        <th class="px-4 py-2">Quantity</th>
+                        <th class="px-4 py-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-tbody">
+                    <!-- Inventory items will be displayed here -->
+                </tbody>
+            </table>
         </div>
         <div class="flex justify-between">
             <button id="freeze-button" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 mr-2">Freeze Inventory</button>

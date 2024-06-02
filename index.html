@@ -4,29 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .inventory-item {
-            margin: 5px 0;
-        }
-        .inventory-item button {
-            margin-left: 10px;
-        }
+        /* Custom styles can be added here if needed */
     </style>
 </head>
-<body>
-    <h1>Inventory Management System</h1>
-    <form id="inventory-form">
-        <input type="text" id="item-name" placeholder="Item Name" required>
-        <input type="number" id="item-quantity" placeholder="Item Quantity" required>
-        <button type="submit">Add Item</button>
-    </form>
-    <div id="inventory-list"></div>
-    <button id="freeze-button">Freeze Inventory</button>
-    <button id="seal-button">Seal Inventory</button>
-    <button id="prevent-extensions-button">Prevent Extensions</button>
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <div class="max-w-2xl mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Inventory Management System</h1>
+        <form id="inventory-form" class="mb-6">
+            <div class="flex flex-col mb-4">
+                <label for="item-name" class="mb-2 text-sm font-medium text-gray-700">Item Name</label>
+                <input type="text" id="item-name" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Item Name" required>
+            </div>
+            <div class="flex flex-col mb-4">
+                <label for="item-quantity" class="mb-2 text-sm font-medium text-gray-700">Item Quantity</label>
+                <input type="number" id="item-quantity" class="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Item Quantity" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">Add Item</button>
+        </form>
+        <div id="inventory-list" class="bg-white p-4 rounded-md shadow-md mb-6">
+            <!-- Inventory items will be displayed here -->
+        </div>
+        <div class="flex justify-between">
+            <button id="freeze-button" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 mr-2">Freeze Inventory</button>
+            <button id="seal-button" class="w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 mx-2">Seal Inventory</button>
+            <button id="prevent-extensions-button" class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 ml-2">Prevent Extensions</button>
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>

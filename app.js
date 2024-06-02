@@ -10,10 +10,12 @@ function updateInventoryDisplay() {
     inventoryList.innerHTML = '';
     for (const [key, value] of Object.entries(inventory)) {
         const item = document.createElement('div');
-        item.className = 'inventory-item';
-        item.innerHTML = `${key}: ${value.quantity} 
-                          <button onclick="editItem('${key}')">Edit</button>
-                          <button onclick="deleteItem('${key}')">Delete</button>`;
+        item.className = 'inventory-item flex justify-between items-center bg-gray-100 p-4 mb-2 rounded-md shadow-sm';
+        item.innerHTML = `<span>${key}: ${value.quantity}</span>
+                          <div>
+                            <button class="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2" onclick="editItem('${key}')">Edit</button>
+                            <button class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400" onclick="deleteItem('${key}')">Delete</button>
+                          </div>`;
         inventoryList.appendChild(item);
     }
     displayInventoryDetails();

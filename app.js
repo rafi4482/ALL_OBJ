@@ -1,9 +1,10 @@
 document.getElementById('inventory-form').addEventListener('submit', addItem);
 document.getElementById('freeze-button').addEventListener('click', freezeInventory);
+document.getElementById('unfreeze-button').addEventListener('click', unfreezeInventory);
 document.getElementById('seal-button').addEventListener('click', sealInventory);
 document.getElementById('prevent-extensions-button').addEventListener('click', preventExtensions);
 
-const inventory = {};
+let inventory = {};
 
 function updateInventoryDisplay() {
     const inventoryTbody = document.getElementById('inventory-tbody');
@@ -75,9 +76,23 @@ function deepFreezeIterative(object) {
     return object;
 }
 
+function cloneInventory(inventory) {
+    const newInventory = {};
+    for (const [key, value] of Object.entries(inventory)) {
+        newInventory[key] = { ...value };
+    }
+    return newInventory;
+}
+
 function freezeInventory() {
     deepFreezeIterative(inventory);
     Swal.fire('Success', 'Inventory has been frozen. No further modifications allowed.', 'success');
+    updateInventoryDisplay();
+}
+
+function unfreezeInventory() {
+    inventory = cloneInventory(inventory);
+    Swal.fire('Success', 'Inventory has been unfrozen. Modifications are now allowed.', 'success');
     updateInventoryDisplay();
 }
 
